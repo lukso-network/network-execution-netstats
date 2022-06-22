@@ -30,7 +30,7 @@ sudo docker push europe-docker.pkg.dev/lks-lz-artifacts/docker-ethstats/eth1stat
 version: "3.4"
 services:
   eth1-stats:
-    image: europe-docker.pkg.dev/lks-lz-artifacts/docker-ethstats/eth1stats:v0.0.2
+    image: europe-docker.pkg.dev/lks-lz-artifacts/docker-ethstats/eth1stats:latest
     container_name: lukso-ethstats
     restart: always
     environment:

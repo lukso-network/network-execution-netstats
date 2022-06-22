@@ -6,45 +6,44 @@ This is a visual interface for tracking L16 network status. It uses WebSockets t
 
 ![Screenshot](https://raw.githubusercontent.com/cubedro/eth-netstats/master/src/images/screenshot.jpg?v=0.0.6 "Screenshot")
 
-## Prerequisite
-* node
-* npm
+##Build the Docker image
 
-## Installation
-Make sure you have node.js and npm installed.
-
-Clone the repository and install the dependencies
-
+To build the docker image from Linux
 ```bash
-git clone https://github.com/cubedro/eth-netstats
-cd eth-netstats
-npm install
-sudo npm install -g grunt-cli
+sudo docker build -t europe-docker.pkg.dev/lks-lz-artifacts/docker-ethstats/eth1stats:<versionNumber> .
 ```
 
-##Build the resources
-NetStats features two versions: the full version and the lite version. In order to build the static files you have to run grunt tasks which will generate dist or dist-lite directories containing the js and css files, fonts and images.
-
-
-To build the full version run
+To build the docker image from MacOS M1 (the platform flag must be provided otherwise the image is build in ARM64 instaed of AMD64)
 ```bash
-grunt
+sudo docker build -t europe-docker.pkg.dev/lks-lz-artifacts/docker-ethstats/eth1stats:<versionNumber> --platform linux/amd64 .
 ```
 
-To build the lite version run
+##Push the Docker image
+
 ```bash
-grunt lite
+sudo docker push europe-docker.pkg.dev/lks-lz-artifacts/docker-ethstats/eth1stats:<versionNumber>
 ```
 
-If you want to build both versions run
-```bash
-grunt all
+##Example of docker-compsoe
+
+```yaml
+version: "3.4"
+services:
+  eth1-stats:
+    image: europe-docker.pkg.dev/lks-lz-artifacts/docker-ethstats/eth1stats:v0.0.2
+      #image: eu.gcr.io/l15-testnet/ethstats@sha256:8da5f8e261d8c32cdf181facfc9322da3d974e07d2a08b8283f1bf82325dde64
+    container_name: lukso-ethstats
+    restart: always
+    environment:
+      WS_SECRET: ""
+    ports:
+      - 80:3000
 ```
 
 ##Run
 
 ```bash
-npm start
+sudo docker-compose up -d
 ```
 
 see the interface at http://localhost:3000

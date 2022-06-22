@@ -39,7 +39,7 @@ services:
       - 80:3000
 ```
 
-##Run
+## Run
 
 ```bash
 sudo docker-compose up -d

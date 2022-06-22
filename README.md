@@ -1,53 +1,49 @@
-Ethereum Network Stats
+L16 Network Stats
 ============
 [![Build Status][travis-image]][travis-url] [![dependency status][dep-image]][dep-url]
 
-This is a visual interface for tracking ethereum network status. It uses WebSockets to receive stats from running nodes and output them through an angular interface. It is the front-end implementation for [eth-net-intelligence-api](https://github.com/cubedro/eth-net-intelligence-api).
+This is a visual interface for tracking L16 network status. It uses WebSockets to receive stats from running nodes and output them through an angular interface. It is the front-end implementation for [eth-net-intelligence-api](https://github.com/cubedro/eth-net-intelligence-api).
 
 ![Screenshot](https://raw.githubusercontent.com/cubedro/eth-netstats/master/src/images/screenshot.jpg?v=0.0.6 "Screenshot")
 
-## Prerequisite
-* node
-* npm
+## Build the Docker image
 
-## Installation
-Make sure you have node.js and npm installed.
-
-Clone the repository and install the dependencies
-
+To build the docker image from Linux
 ```bash
-git clone https://github.com/cubedro/eth-netstats
-cd eth-netstats
-npm install
-sudo npm install -g grunt-cli
+sudo docker build -t europe-docker.pkg.dev/lks-lz-artifacts/docker-ethstats/eth1stats:<versionNumber> .
 ```
 
-##Build the resources
-NetStats features two versions: the full version and the lite version. In order to build the static files you have to run grunt tasks which will generate dist or dist-lite directories containing the js and css files, fonts and images.
-
-
-To build the full version run
+To build the docker image from MacOS M1 (the platform flag must be provided otherwise the image is build in ARM64 instaed of AMD64)
 ```bash
-grunt
+sudo docker build -t europe-docker.pkg.dev/lks-lz-artifacts/docker-ethstats/eth1stats:<versionNumber> --platform linux/amd64 .
 ```
 
-To build the lite version run
-```bash
-grunt lite
-```
-
-If you want to build both versions run
-```bash
-grunt all
-```
-
-##Run
+## Push the Docker image
 
 ```bash
-npm start
+sudo docker push europe-docker.pkg.dev/lks-lz-artifacts/docker-ethstats/eth1stats:<versionNumber>
 ```
 
-see the interface at http://localhost:3000
+## Example of docker-compsoe
+
+```yaml
+version: "3.4"
+services:
+  eth1-stats:
+    image: europe-docker.pkg.dev/lks-lz-artifacts/docker-ethstats/eth1stats:latest
+    container_name: lukso-ethstats
+    restart: always
+    environment:
+      WS_SECRET: ""
+    ports:
+      - 80:3000
+```
+
+## Run
+
+```bash
+sudo docker-compose up -d
+```
 
 [travis-image]: https://travis-ci.org/cubedro/eth-netstats.svg
 [travis-url]: https://travis-ci.org/cubedro/eth-netstats

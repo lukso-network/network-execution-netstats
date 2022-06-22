@@ -1,6 +1,6 @@
 {
   "name": "eth-netstats",
-  "description": "Ethereum Network Intelligence dashboard",
+  "description": "L16 Network Intelligence dashboard",
   "version": "0.0.9",
   "private": true,
   "engines": {
